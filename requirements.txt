@@ -1,0 +1,4 @@
+Django>=6.1,<6.2
+gunicorn>=23,<24
+pandas>=3,<4
+whitenoise>=6.9,<7
