@@ -1,0 +1,3394 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>DataLoom | Data Analysis</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- Google Fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+
+</head>
+
+
+<body>
+
+    <div class="app">
+
+
+        <!-- =================================================
+         SIDEBAR
+    ================================================== -->
+
+        <aside class="sidebar">
+
+            <div class="brand">
+
+                <div class="brand-mark">
+                    DL
+                </div>
+
+                <div>
+
+                    <h2>
+                        DataLoom
+                    </h2>
+
+                    <span>
+                        Data Intelligence
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <nav class="navigation">
+
+                <p class="nav-heading">
+                    WORKSPACE
+                </p>
+
+
+                <a href="#dashboard" class="nav-link active">
+
+                    <span>
+                        ⌂
+                    </span>
+
+                    Dashboard
+
+                </a>
+
+
+                <a href="#upload" class="nav-link">
+
+                    <span>
+                        ↑
+                    </span>
+
+                    Upload Dataset
+
+                </a>
+
+
+                <a href="#analysis" class="nav-link">
+
+                    <span>
+                        ◈
+                    </span>
+
+                    Analysis
+
+                </a>
+
+
+                <a href="#visualizations" class="nav-link">
+
+                    <span>
+                        ◉
+                    </span>
+
+                    Visualizations
+
+                </a>
+
+
+                <a href="#preview" class="nav-link">
+
+                    <span>
+                        ▤
+                    </span>
+
+                    Data Preview
+
+                </a>
+
+            </nav>
+
+
+            <div class="sidebar-bottom">
+
+                <div class="sidebar-card">
+
+                    <span class="small-label">
+                        FILE LIMIT
+                    </span>
+
+                    <strong>
+                        16 MB
+                    </strong>
+
+                    <div class="storage-bar">
+                        <div></div>
+                    </div>
+
+                    <p>
+                        Maximum dataset size
+                    </p>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =================================================
+         MAIN CONTENT
+    ================================================== -->
+
+        <main class="main-content">
+
+
+            <!-- =================================================
+             TOP BAR
+        ================================================== -->
+
+            <header class="topbar">
+
+                <div>
+
+                    <span class="eyebrow">
+                        DATA WORKSPACE
+                    </span>
+
+                    <h1>
+                        Dataset Dashboard
+                    </h1>
+
+                </div>
+
+
+                <div class="profile">
+
+                    <div class="profile-avatar">
+                        D
+                    </div>
+
+                    <div class="profile-info">
+
+                        <strong>
+                            DataLoom
+                        </strong>
+
+                        <span>
+                            Analyzer
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+
+            <div class="page-content" id="dashboard">
+
+
+                <!-- =================================================
+                 HERO / UPLOAD
+            ================================================== -->
+
+                <section class="hero" id="upload">
+
+
+                    <div class="hero-content">
+
+                        <span class="hero-tag">
+                            ✦ SMART DATA ANALYSIS
+                        </span>
+
+
+                        <h2>
+                            Turn your dataset into
+                            <span>
+                                insights.
+                            </span>
+                        </h2>
+
+
+                        <p>
+                            Upload your dataset and DataLoom will
+                            automatically inspect your data, detect
+                            column types and generate meaningful
+                            visualizations.
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                     UPLOAD CARD
+                ================================================== -->
+
+                    <div class="upload-card">
+
+
+                        <form method="POST" action="/analyze/" enctype="multipart/form-data" id="uploadForm">
+
+
+                            {% csrf_token %}
+
+
+
+                            <!-- =================================================
+                             DROP ZONE
+                        ================================================== -->
+
+                            <div class="drop-zone" id="dropZone">
+
+
+                                <div class="upload-content">
+
+                                    <div class="upload-icon">
+                                        ↑
+                                    </div>
+
+
+                                    <h3>
+                                        Drop your dataset here
+                                    </h3>
+
+
+                                    <p>
+                                        or click to browse your computer
+                                    </p>
+
+
+                                    <span class="file-type">
+                                        CSV · XLS · XLSX
+                                        &nbsp;•&nbsp;
+                                        Maximum 16 MB
+                                    </span>
+
+                                </div>
+
+
+                                <!--
+                                This invisible input covers the
+                                entire upload area.
+                                Clicking anywhere inside the box
+                                opens the computer file picker.
+                            -->
+
+                                <input type="file" name="file" id="fileInput" accept=".csv,.xls,.xlsx">
+
+                            </div>
+
+
+
+                            <!-- =================================================
+                             SELECTED FILE
+                        ================================================== -->
+
+                            <div class="selected-file" id="selectedFile">
+
+
+                                <div class="file-icon">
+                                    DATA
+                                </div>
+
+
+                                <div class="file-details">
+
+                                    <strong id="fileName">
+                                        No file selected
+                                    </strong>
+
+
+                                    <span id="fileSize">
+                                        0 KB
+                                    </span>
+
+                                </div>
+
+
+                                <div class="file-check">
+                                    ✓
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- =================================================
+                             ANALYZE BUTTON
+                        ================================================== -->
+
+                            <button type="submit" id="analyzeButton" class="analyze-button">
+
+                                Analyze Dataset
+
+                                <span>
+                                    →
+                                </span>
+
+                            </button>
+
+
+
+                            <!-- =================================================
+                             MESSAGE
+                        ================================================== -->
+
+                            <div id="uploadMessage" class="upload-message"></div>
+
+
+                        </form>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                 DATASET OVERVIEW
+            ================================================== -->
+
+                <section id="analysis">
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <span>
+                                DATASET OVERVIEW
+                            </span>
+
+                            <h2>
+                                At a glance
+                            </h2>
+
+                        </div>
+
+
+                        <div class="dataset-status" id="datasetStatus">
+                            No dataset loaded
+                        </div>
+
+                    </div>
+
+
+                    <div class="stats-grid">
+
+
+                        <!-- ROWS -->
+
+                        <div class="stat-card">
+
+                            <div class="stat-icon purple">
+                                ↕
+                            </div>
+
+                            <span>
+                                TOTAL ROWS
+                            </span>
+
+                            <strong id="totalRows">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <!-- COLUMNS -->
+
+                        <div class="stat-card">
+
+                            <div class="stat-icon blue">
+                                ▦
+                            </div>
+
+                            <span>
+                                TOTAL COLUMNS
+                            </span>
+
+                            <strong id="totalColumns">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <!-- MISSING -->
+
+                        <div class="stat-card">
+
+                            <div class="stat-icon orange">
+                                !
+                            </div>
+
+                            <span>
+                                MISSING CELLS
+                            </span>
+
+                            <strong id="totalMissing">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <!-- NUMERIC -->
+
+                        <div class="stat-card">
+
+                            <div class="stat-icon green">
+                                #
+                            </div>
+
+                            <span>
+                                NUMERIC COLUMNS
+                            </span>
+
+                            <strong id="numericColumns">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <!-- CHARTS -->
+
+                        <div class="stat-card">
+
+                            <div class="stat-icon pink">
+                                ◉
+                            </div>
+
+                            <span>
+                                VISUALIZATIONS
+                            </span>
+
+                            <strong id="chartCount">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                 DATA QUALITY
+            ================================================== -->
+
+                <section class="quality-section">
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <span>
+                                DATA QUALITY
+                            </span>
+
+                            <h2>
+                                Dataset health
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="quality-grid">
+
+
+                        <!-- COMPLETENESS -->
+
+                        <div class="panel">
+
+                            <div class="panel-heading">
+
+                                <div>
+
+                                    <h3>
+                                        Completeness
+                                    </h3>
+
+                                    <p>
+                                        How complete is your dataset?
+                                    </p>
+
+                                </div>
+
+                                <strong id="completePercent">
+                                    0%
+                                </strong>
+
+                            </div>
+
+
+                            <div class="quality-progress">
+
+                                <div id="completeBar" class="quality-progress-fill"></div>
+
+                            </div>
+
+
+                            <div class="quality-bottom">
+
+                                <span>
+                                    Complete cells
+                                </span>
+
+                                <span id="completeCells">
+                                    0
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- MISSING DATA -->
+
+                        <div class="panel">
+
+                            <div class="panel-heading">
+
+                                <div>
+
+                                    <h3>
+                                        Missing data
+                                    </h3>
+
+                                    <p>
+                                        Empty cells across columns
+                                    </p>
+
+                                </div>
+
+                                <strong id="missingPercent">
+                                    0%
+                                </strong>
+
+                            </div>
+
+
+                            <div class="quality-progress">
+
+                                <div id="missingBar" class="quality-progress-fill missing"></div>
+
+                            </div>
+
+
+                            <div class="quality-bottom">
+
+                                <span>
+                                    Missing cells
+                                </span>
+
+                                <span id="missingCellsBottom">
+                                    0
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- COLUMN TYPES -->
+
+                        <div class="panel">
+
+                            <div class="panel-heading">
+
+                                <div>
+
+                                    <h3>
+                                        Column types
+                                    </h3>
+
+                                    <p>
+                                        Automatically detected
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div id="columnTypes" class="column-types">
+
+                                <span class="empty-type">
+                                    No dataset loaded
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                 MISSING VALUES
+            ================================================== -->
+
+                <section class="missing-section">
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <span>
+                                DATA QUALITY
+                            </span>
+
+                            <h2>
+                                Missing values
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel">
+
+                        <div id="missingList" class="missing-list">
+
+                            <div class="empty-state">
+                                Upload a dataset to inspect
+                                missing values.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                 VISUALIZATIONS
+            ================================================== -->
+
+                <section id="visualizations" class="visualizations-section">
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <span>
+                                AUTOMATED EXPLORATION
+                            </span>
+
+                            <h2>
+                                Visualizations
+                            </h2>
+
+                            <p class="section-description">
+                                Charts are automatically selected
+                                according to your dataset's column types.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div id="chartsGrid" class="charts-grid">
+
+                        <div class="visualization-empty">
+
+                            <div class="empty-chart-icon">
+                                ◌
+                            </div>
+
+                            <h3>
+                                Your charts will appear here
+                            </h3>
+
+                            <p>
+                                Upload and analyze a dataset
+                                to generate visualizations.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =================================================
+                 DATA PREVIEW
+            ================================================== -->
+
+                <section id="preview" class="preview-section">
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <span>
+                                RAW DATA
+                            </span>
+
+                            <h2>
+                                Dataset preview
+                            </h2>
+
+                        </div>
+
+
+                        <span id="previewInfo">
+                            First 8 rows
+                        </span>
+
+                    </div>
+
+
+                    <div class="table-panel">
+
+                        <div class="table-top">
+
+                            <div>
+
+                                <h3>
+                                    First 8 records
+                                </h3>
+
+                                <p>
+                                    Preview of the uploaded dataset
+                                </p>
+
+                            </div>
+
+
+                            <span class="preview-badge">
+                                8 ROWS
+                            </span>
+
+                        </div>
+
+
+                        <div class="table-wrapper">
+
+                            <table>
+
+                                <thead id="tableHead"></thead>
+
+                                <tbody id="tableBody"></tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <!-- =================================================
+     DATA ANALYSIS LIBRARIES
+================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+
+
+    <!-- =================================================
+     DATALOOM - SINGLE JAVASCRIPT CONTROLLER
+================================================== -->
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            /* =================================================
+               ELEMENTS
+            ================================================= */
+
+            const form =
+                document.getElementById("uploadForm");
+
+            const fileInput =
+                document.getElementById("fileInput");
+
+            const dropZone =
+                document.getElementById("dropZone");
+
+            const selectedFile =
+                document.getElementById("selectedFile");
+
+            const fileName =
+                document.getElementById("fileName");
+
+            const fileSize =
+                document.getElementById("fileSize");
+
+            const analyzeButton =
+                document.getElementById("analyzeButton");
+
+            const uploadMessage =
+                document.getElementById("uploadMessage");
+
+            const chartsGrid =
+                document.getElementById("chartsGrid");
+
+
+            /* =================================================
+               APPLICATION DATA
+            ================================================= */
+
+            let currentFile = null;
+
+            let data = [];
+
+            let headers = [];
+
+            let columnTypes = {};
+
+            let chartObjects = [];
+
+
+            /* =================================================
+               INITIAL STATE
+            ================================================= */
+
+            selectedFile.style.display = "none";
+
+            analyzeButton.style.display = "none";
+
+
+            /* =================================================
+               FILE SELECTION
+            ================================================= */
+
+            fileInput.addEventListener(
+                "change",
+                function () {
+
+                    const file =
+                        this.files[0];
+
+                    if (!file) {
+                        return;
+                    }
+
+                    handleFile(file);
+
+                }
+            );
+
+
+            /* =================================================
+               DRAG AND DROP
+            ================================================= */
+
+            dropZone.addEventListener(
+                "dragover",
+                function (event) {
+
+                    event.preventDefault();
+
+                    dropZone.classList.add(
+                        "dragging"
+                    );
+
+                }
+            );
+
+
+            dropZone.addEventListener(
+                "dragleave",
+                function () {
+
+                    dropZone.classList.remove(
+                        "dragging"
+                    );
+
+                }
+            );
+
+
+            dropZone.addEventListener(
+                "drop",
+                function (event) {
+
+                    event.preventDefault();
+
+                    dropZone.classList.remove(
+                        "dragging"
+                    );
+
+                    const file =
+                        event.dataTransfer.files[0];
+
+                    if (file) {
+
+                        currentFile = file;
+
+                        fileInput.files =
+                            event.dataTransfer.files;
+
+                        handleFile(file);
+
+                    }
+
+                }
+            );
+
+
+            /* =================================================
+               HANDLE FILE
+            ================================================= */
+
+            function handleFile(file) {
+
+                const maxSize =
+                    16 * 1024 * 1024;
+
+
+                const extension =
+                    file.name
+                        .split(".")
+                        .pop()
+                        .toLowerCase();
+
+
+                const allowed =
+                    ["csv", "xls", "xlsx"];
+
+
+                if (
+                    !allowed.includes(
+                        extension
+                    )
+                ) {
+
+                    showMessage(
+                        "Please select a CSV, XLS, or XLSX file.",
+                        "error"
+                    );
+
+                    return;
+                }
+
+
+                if (
+                    file.size > maxSize
+                ) {
+
+                    showMessage(
+                        "This file is larger than 16 MB.",
+                        "error"
+                    );
+
+                    return;
+                }
+
+
+                currentFile =
+                    file;
+
+
+                fileName.textContent =
+                    file.name;
+
+
+                fileSize.textContent =
+                    formatFileSize(
+                        file.size
+                    );
+
+
+                selectedFile.style.display =
+                    "flex";
+
+
+                selectedFile.classList.add(
+                    "show"
+                );
+
+
+                analyzeButton.style.display =
+                    "inline-flex";
+
+
+                analyzeButton.classList.add(
+                    "show"
+                );
+
+
+                analyzeButton.disabled =
+                    false;
+
+
+                analyzeButton.innerHTML =
+                    'Analyze Dataset <span>→</span>';
+
+
+                showMessage(
+                    "File selected successfully: " +
+                    file.name,
+                    "success"
+                );
+
+            }
+
+
+            /* =================================================
+               FILE SIZE
+            ================================================= */
+
+            function formatFileSize(bytes) {
+
+                if (
+                    bytes <
+                    1024
+                ) {
+
+                    return (
+                        bytes +
+                        " Bytes"
+                    );
+
+                }
+
+
+                if (
+                    bytes <
+                    1024 * 1024
+                ) {
+
+                    return (
+                        (
+                            bytes / 1024
+                        ).toFixed(1) +
+                        " KB"
+                    );
+
+                }
+
+
+                return (
+                    (
+                        bytes /
+                        (1024 * 1024)
+                    ).toFixed(1) +
+                    " MB"
+                );
+
+            }
+
+
+            /* =================================================
+               MESSAGE
+            ================================================= */
+
+            function showMessage(
+                message,
+                type
+            ) {
+
+                uploadMessage.textContent =
+                    message;
+
+                uploadMessage.className =
+                    "upload-message " +
+                    type;
+
+            }
+
+
+            /* =================================================
+               ANALYZE
+            ================================================= */
+
+            form.addEventListener(
+                "submit",
+                async function (event) {
+
+                    event.preventDefault();
+
+
+                    if (!currentFile) {
+
+                        showMessage(
+                            "Please select a dataset first.",
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+
+                    analyzeButton.disabled =
+                        true;
+
+
+                    analyzeButton.innerHTML =
+                        "Analyzing with Pandas...";
+
+
+                    showMessage(
+                        "Uploading and analyzing your dataset...",
+                        "loading"
+                    );
+
+
+                    try {
+
+                        const formData =
+                            new FormData();
+
+
+                        formData.append(
+                            "file",
+                            currentFile
+                        );
+
+
+                        const csrf =
+                            form.querySelector(
+                                'input[name="csrfmiddlewaretoken"]'
+                            );
+
+
+                        if (csrf) {
+
+                            formData.append(
+                                "csrfmiddlewaretoken",
+                                csrf.value
+                            );
+
+                        }
+
+
+                        const response =
+                            await fetch(
+                                "/analyze/",
+                                {
+                                    method: "POST",
+                                    body: formData,
+                                    headers: {
+                                        "X-Requested-With":
+                                            "XMLHttpRequest"
+                                    }
+                                }
+                            );
+
+
+                        const result =
+                            await response.json();
+
+
+                        if (!response.ok) {
+
+                            throw new Error(
+                                result.error ||
+                                "Analysis failed."
+                            );
+
+                        }
+
+
+                        if (!result.success) {
+
+                            throw new Error(
+                                result.error ||
+                                "Analysis failed."
+                            );
+
+                        }
+
+
+                        /* =========================================
+                           SAVE PANDAS RESULT
+                        ========================================= */
+
+                        data =
+                            result.data || [];
+
+                        headers =
+                            result.headers || [];
+
+                        columnTypes =
+                            result.column_types || {};
+
+
+                        /* =========================================
+                           OVERVIEW
+                        ========================================= */
+
+                        document.getElementById(
+                            "totalRows"
+                        ).textContent =
+                            result.total_rows;
+
+
+                        document.getElementById(
+                            "totalColumns"
+                        ).textContent =
+                            result.total_columns;
+
+
+                        document.getElementById(
+                            "totalMissing"
+                        ).textContent =
+                            result.total_missing;
+
+
+                        document.getElementById(
+                            "numericColumns"
+                        ).textContent =
+                            result.numeric_columns.length;
+
+
+                        document.getElementById(
+                            "chartCount"
+                        ).textContent =
+                            result.chart_count;
+
+
+                        document.getElementById(
+                            "datasetStatus"
+                        ).textContent =
+                            "Dataset analyzed with Pandas";
+
+
+                        /* =========================================
+                           QUALITY
+                        ========================================= */
+
+                        document.getElementById(
+                            "completePercent"
+                        ).textContent =
+                            result.complete_percent +
+                            "%";
+
+
+                        document.getElementById(
+                            "completeCells"
+                        ).textContent =
+                            result.complete_cells;
+
+
+                        document.getElementById(
+                            "missingPercent"
+                        ).textContent =
+                            result.missing_percent +
+                            "%";
+
+
+                        document.getElementById(
+                            "missingCellsBottom"
+                        ).textContent =
+                            result.total_missing;
+
+
+                        document.getElementById(
+                            "completeBar"
+                        ).style.width =
+                            result.complete_percent +
+                            "%";
+
+
+                        document.getElementById(
+                            "missingBar"
+                        ).style.width =
+                            result.missing_percent +
+                            "%";
+
+
+                        /* =========================================
+                           COLUMN TYPES
+                        ========================================= */
+
+                        renderColumnTypes();
+
+
+                        /* =========================================
+                           MISSING VALUES
+                        ========================================= */
+
+                        renderMissing(
+                            result.missing_by_column,
+                            result.total_rows
+                        );
+
+
+                        /* =========================================
+                           PREVIEW
+                        ========================================= */
+
+                        renderPreview(
+                            result.preview
+                        );
+
+
+                        /* =========================================
+                           CHARTS
+                        ========================================= */
+
+                        generateCharts();
+
+
+                        showMessage(
+                            "File analyzed successfully with Pandas.",
+                            "success"
+                        );
+
+
+                        analyzeButton.disabled =
+                            false;
+
+
+                        analyzeButton.innerHTML =
+                            'Analyze Dataset <span>→</span>';
+
+                    }
+
+
+                    catch (error) {
+
+                        console.error(
+                            "DataLoom error:",
+                            error
+                        );
+
+
+                        showMessage(
+                            error.message ||
+                            "Something went wrong.",
+                            "error"
+                        );
+
+
+                        analyzeButton.disabled =
+                            false;
+
+
+                        analyzeButton.innerHTML =
+                            'Analyze Dataset <span>→</span>';
+
+                    }
+
+                }
+            );
+
+
+            /* =================================================
+               COLUMN TYPES
+            ================================================= */
+
+            function renderColumnTypes() {
+
+                const container =
+                    document.getElementById(
+                        "columnTypes"
+                    );
+
+
+                container.innerHTML =
+                    "";
+
+
+                headers.forEach(
+                    function (column) {
+
+                        const badge =
+                            document.createElement(
+                                "span"
+                            );
+
+
+                        badge.className =
+                            "type-badge " +
+                            columnTypes[column];
+
+
+                        badge.textContent =
+                            column +
+                            ": " +
+                            columnTypes[column];
+
+
+                        container.appendChild(
+                            badge
+                        );
+
+                    }
+                );
+
+            }
+
+
+            /* =================================================
+               MISSING VALUES
+            ================================================= */
+
+            function renderMissing(
+                missing,
+                totalRows
+            ) {
+
+                const container =
+                    document.getElementById(
+                        "missingList"
+                    );
+
+
+                container.innerHTML =
+                    "";
+
+
+                let found =
+                    false;
+
+
+                headers.forEach(
+                    function (column) {
+
+                        const count =
+                            Number(
+                                missing[column] || 0
+                            );
+
+
+                        if (
+                            count > 0
+                        ) {
+
+                            found =
+                                true;
+
+                        }
+
+
+                        const percentage =
+                            totalRows > 0
+                                ? (
+                                    count /
+                                    totalRows
+                                ) * 100
+                                : 0;
+
+
+                        const row =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        row.className =
+                            "missing-row";
+
+
+                        row.innerHTML = `
+                    <div>
+
+                        <div class="missing-name">
+                            ${escapeHtml(column)}
+                        </div>
+
+                        <div class="mini-progress">
+
+                            <div
+                                style="width:${percentage}%"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="missing-number">
+                        ${count} cells
+                    </div>
+
+                    <div class="missing-number">
+                        ${percentage.toFixed(1)}%
+                    </div>
+                `;
+
+
+                        container.appendChild(
+                            row
+                        );
+
+                    }
+                );
+
+
+                if (!found) {
+
+                    container.innerHTML = `
+                <div class="empty-state">
+                    No missing values were detected.
+                </div>
+            `;
+
+                }
+
+            }
+
+
+            /* =================================================
+               PREVIEW
+            ================================================= */
+
+            function renderPreview(
+                preview
+            ) {
+
+                const head =
+                    document.getElementById(
+                        "tableHead"
+                    );
+
+                const body =
+                    document.getElementById(
+                        "tableBody"
+                    );
+
+
+                head.innerHTML =
+                    "";
+
+                body.innerHTML =
+                    "";
+
+
+                const headerRow =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                headers.forEach(
+                    function (column) {
+
+                        const th =
+                            document.createElement(
+                                "th"
+                            );
+
+
+                        th.textContent =
+                            column;
+
+
+                        headerRow.appendChild(
+                            th
+                        );
+
+                    }
+                );
+
+
+                head.appendChild(
+                    headerRow
+                );
+
+
+                preview.forEach(
+                    function (row) {
+
+                        const tr =
+                            document.createElement(
+                                "tr"
+                            );
+
+
+                        headers.forEach(
+                            function (column) {
+
+                                const td =
+                                    document.createElement(
+                                        "td"
+                                    );
+
+
+                                td.textContent =
+                                    row[column] ??
+                                    "";
+
+
+                                tr.appendChild(
+                                    td
+                                );
+
+                            }
+                        );
+
+
+                        body.appendChild(
+                            tr
+                        );
+
+                    }
+                );
+
+
+                document.getElementById(
+                    "previewInfo"
+                ).textContent =
+                    "First " +
+                    preview.length +
+                    " rows";
+
+            }
+
+
+            /* =================================================
+               CHARTS
+            ================================================= */
+
+            function generateCharts() {
+
+                clearCharts();
+
+
+                const numeric =
+                    headers.filter(
+                        function (column) {
+
+                            return (
+                                columnTypes[column] ===
+                                "numeric"
+                            );
+
+                        }
+                    );
+
+
+                const categorical =
+                    headers.filter(
+                        function (column) {
+
+                            return (
+                                columnTypes[column] ===
+                                "categorical"
+                            );
+
+                        }
+                    );
+
+
+                const dates =
+                    headers.filter(
+                        function (column) {
+
+                            return (
+                                columnTypes[column] ===
+                                "date"
+                            );
+
+                        }
+                    );
+
+
+                console.log(
+                    "Numeric:",
+                    numeric
+                );
+
+
+                console.log(
+                    "Categorical:",
+                    categorical
+                );
+
+
+                console.log(
+                    "Dates:",
+                    dates
+                );
+
+
+                /* Histograms */
+
+                numeric.forEach(
+                    function (column) {
+
+                        createHistogram(
+                            column
+                        );
+
+                    }
+                );
+
+
+                /* Scatter */
+
+                if (
+                    numeric.length >= 2
+                ) {
+
+                    createScatter(
+                        numeric[0],
+                        numeric[1]
+                    );
+
+                }
+
+
+                /* Box plot */
+
+                if (
+                    numeric.length >= 1 &&
+                    categorical.length >= 1
+                ) {
+
+                    createBoxPlot(
+                        numeric[0],
+                        categorical[0]
+                    );
+
+                }
+
+
+                /* Pie / Count */
+
+                categorical.forEach(
+                    function (column) {
+
+                        const unique =
+                            getUniqueValues(
+                                column
+                            ).length;
+
+
+                        if (
+                            unique <= 8
+                        ) {
+
+                            createPie(
+                                column
+                            );
+
+                        } else {
+
+                            createCount(
+                                column
+                            );
+
+                        }
+
+                    }
+                );
+
+
+                /* Treemap + Sunburst */
+
+                if (
+                    categorical.length >= 2
+                ) {
+
+                    createTreemap(
+                        categorical[0],
+                        categorical[1]
+                    );
+
+
+                    createSunburst(
+                        categorical[0],
+                        categorical[1]
+                    );
+
+                }
+
+
+                /* Line */
+
+                if (
+                    dates.length >= 1 &&
+                    numeric.length >= 1
+                ) {
+
+                    createLine(
+                        dates[0],
+                        numeric[0]
+                    );
+
+                }
+
+
+                document.getElementById(
+                    "chartCount"
+                ).textContent =
+                    chartObjects.length;
+
+
+                console.log(
+                    "Charts created:",
+                    chartObjects.length
+                );
+
+            }
+
+
+            /* =================================================
+               CLEAR CHARTS
+            ================================================= */
+
+            function clearCharts() {
+
+                chartObjects.forEach(
+                    function (chart) {
+
+                        try {
+
+                            if (
+                                chart.kind ===
+                                "plotly"
+                            ) {
+
+                                if (
+                                    typeof Plotly !==
+                                    "undefined"
+                                ) {
+
+                                    Plotly.purge(
+                                        chart.element
+                                    );
+
+                                }
+
+                            } else {
+
+                                chart.destroy();
+
+                            }
+
+                        }
+                        catch (error) {
+
+                            console.warn(
+                                error
+                            );
+
+                        }
+
+                    }
+                );
+
+
+                chartObjects =
+                    [];
+
+
+                chartsGrid.innerHTML =
+                    "";
+
+            }
+
+
+            /* =================================================
+               CHART CARD
+            ================================================= */
+
+            function makeCard(
+                title,
+                description
+            ) {
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                card.className =
+                    "chart-card";
+
+
+                card.innerHTML = `
+            <div class="chart-header">
+
+                <div>
+
+                    <h3>
+                        ${escapeHtml(title)}
+                    </h3>
+
+                    <p>
+                        ${escapeHtml(description)}
+                    </p>
+
+                </div>
+
+                <span class="chart-badge">
+                    AUTO
+                </span>
+
+            </div>
+        `;
+
+
+                chartsGrid.appendChild(
+                    card
+                );
+
+
+                return card;
+
+            }
+
+
+            /* =================================================
+               HISTOGRAM
+            ================================================= */
+
+            function createHistogram(
+                column
+            ) {
+
+                if (
+                    typeof Chart ===
+                    "undefined"
+                ) {
+
+                    return;
+
+                }
+
+
+                const card =
+                    makeCard(
+                        "Histogram — " +
+                        column,
+                        "Distribution of numeric values"
+                    );
+
+
+                const container =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                container.className =
+                    "chart-container";
+
+
+                const canvas =
+                    document.createElement(
+                        "canvas"
+                    );
+
+
+                container.appendChild(
+                    canvas
+                );
+
+
+                card.appendChild(
+                    container
+                );
+
+
+                const values =
+                    data
+                        .map(
+                            function (row) {
+                                return Number(
+                                    row[column]
+                                );
+                            }
+                        )
+                        .filter(
+                            function (value) {
+                                return Number.isFinite(
+                                    value
+                                );
+                            }
+                        );
+
+
+                if (!values.length) {
+                    return;
+                }
+
+
+                const min =
+                    Math.min(
+                        ...values
+                    );
+
+
+                const max =
+                    Math.max(
+                        ...values
+                    );
+
+
+                const binsCount =
+                    10;
+
+
+                const step =
+                    max === min
+                        ? 1
+                        : (
+                            max - min
+                        ) /
+                        binsCount;
+
+
+                const bins =
+                    new Array(
+                        binsCount
+                    ).fill(0);
+
+
+                values.forEach(
+                    function (value) {
+
+                        let index =
+                            Math.floor(
+                                (
+                                    value - min
+                                ) /
+                                step
+                            );
+
+
+                        if (
+                            index >=
+                            binsCount
+                        ) {
+
+                            index =
+                                binsCount - 1;
+
+                        }
+
+
+                        bins[index]++;
+
+                    }
+                );
+
+
+                const labels =
+                    bins.map(
+                        function (_, index) {
+
+                            return (
+                                min +
+                                index *
+                                step
+                            ).toFixed(1);
+
+                        }
+                    );
+
+
+                const chart =
+                    new Chart(
+                        canvas,
+                        {
+                            type: "bar",
+
+                            data: {
+
+                                labels:
+
+                                    labels,
+
+                                datasets: [
+
+                                    {
+                                        label:
+                                            column,
+
+                                        data:
+                                            bins
+                                    }
+
+                                ]
+                            },
+
+                            options: {
+
+                                responsive:
+                                    true,
+
+                                maintainAspectRatio:
+                                    false
+                            }
+                        }
+                    );
+
+
+                chartObjects.push(
+                    chart
+                );
+
+            }
+
+
+            /* =================================================
+               SCATTER
+            ================================================= */
+
+            function createScatter(
+                xColumn,
+                yColumn
+            ) {
+
+                const card =
+                    makeCard(
+                        "Scatter Plot — " +
+                        xColumn +
+                        " vs " +
+                        yColumn,
+                        "Relationship between two numeric columns"
+                    );
+
+
+                const container =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                container.className =
+                    "chart-container";
+
+
+                const canvas =
+                    document.createElement(
+                        "canvas"
+                    );
+
+
+                container.appendChild(
+                    canvas
+                );
+
+
+                card.appendChild(
+                    container
+                );
+
+
+                const points =
+                    data
+                        .filter(
+                            function (row) {
+
+                                return (
+                                    Number.isFinite(
+                                        Number(
+                                            row[xColumn]
+                                        )
+                                    ) &&
+                                    Number.isFinite(
+                                        Number(
+                                            row[yColumn]
+                                        )
+                                    )
+                                );
+
+                            }
+                        )
+                        .map(
+                            function (row) {
+
+                                return {
+
+                                    x:
+                                        Number(
+                                            row[xColumn]
+                                        ),
+
+                                    y:
+                                        Number(
+                                            row[yColumn]
+                                        )
+
+                                };
+
+                            }
+                        );
+
+
+                const chart =
+                    new Chart(
+                        canvas,
+                        {
+
+                            type:
+                                "scatter",
+
+                            data: {
+
+                                datasets: [
+
+                                    {
+
+                                        label:
+                                            xColumn +
+                                            " vs " +
+                                            yColumn,
+
+                                        data:
+                                            points
+
+                                    }
+
+                                ]
+
+                            },
+
+                            options: {
+
+                                responsive:
+                                    true,
+
+                                maintainAspectRatio:
+                                    false
+
+                            }
+
+                        }
+                    );
+
+
+                chartObjects.push(
+                    chart
+                );
+
+            }
+
+
+            /* =================================================
+               BOX PLOT
+            ================================================= */
+
+            function createBoxPlot(
+                numericColumn,
+                categoryColumn
+            ) {
+
+                if (
+                    typeof Plotly ===
+                    "undefined"
+                ) {
+
+                    return;
+
+                }
+
+
+                const card =
+                    makeCard(
+                        "Box Plot — " +
+                        numericColumn +
+                        " by " +
+                        categoryColumn,
+                        "Numeric distribution by category"
+                    );
+
+
+                const plot =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                plot.className =
+                    "plotly-container";
+
+
+                card.appendChild(
+                    plot
+                );
+
+
+                const groups = {};
+
+
+                data.forEach(
+                    function (row) {
+
+                        const category =
+                            String(
+                                row[categoryColumn] ??
+                                "Unknown"
+                            );
+
+
+                        const value =
+                            Number(
+                                row[numericColumn]
+                            );
+
+
+                        if (
+                            Number.isFinite(
+                                value
+                            )
+                        ) {
+
+                            if (
+                                !groups[
+                                category
+                                ]
+                            ) {
+
+                                groups[
+                                    category
+                                ] = [];
+
+                            }
+
+
+                            groups[
+                                category
+                            ].push(
+                                value
+                            );
+
+                        }
+
+                    }
+                );
+
+
+                const traces =
+                    Object.entries(
+                        groups
+                    ).map(
+                        function (
+                            [category, values]
+                        ) {
+
+                            return {
+
+                                type:
+                                    "box",
+
+                                y:
+                                    values,
+
+                                name:
+                                    category
+
+                            };
+
+                        }
+                    );
+
+
+                Plotly.newPlot(
+                    plot,
+                    traces,
+                    {
+                        margin: {
+                            t: 10,
+                            l: 45,
+                            r: 15,
+                            b: 45
+                        }
+                    },
+                    {
+                        responsive: true,
+                        displayModeBar: false
+                    }
+                );
+
+
+                chartObjects.push({
+
+                    kind:
+                        "plotly",
+
+                    element:
+                        plot
+
+                });
+
+            }
+
+
+            /* =================================================
+               PIE
+            ================================================= */
+
+            function createPie(
+                column
+            ) {
+
+                const card =
+                    makeCard(
+                        "Pie Chart — " +
+                        column,
+                        "Category distribution"
+                    );
+
+
+                const container =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                container.className =
+                    "chart-container";
+
+
+                const canvas =
+                    document.createElement(
+                        "canvas"
+                    );
+
+
+                container.appendChild(
+                    canvas
+                );
+
+
+                card.appendChild(
+                    container
+                );
+
+
+                const counts =
+                    getValueCounts(
+                        column
+                    );
+
+
+                const chart =
+                    new Chart(
+                        canvas,
+                        {
+
+                            type:
+                                "pie",
+
+                            data: {
+
+                                labels:
+                                    Object.keys(
+                                        counts
+                                    ),
+
+                                datasets: [
+
+                                    {
+
+                                        label:
+                                            column,
+
+                                        data:
+                                            Object.values(
+                                                counts
+                                            )
+
+                                    }
+
+                                ]
+
+                            },
+
+                            options: {
+
+                                responsive:
+                                    true,
+
+                                maintainAspectRatio:
+                                    false
+
+                            }
+
+                        }
+                    );
+
+
+                chartObjects.push(
+                    chart
+                );
+
+            }
+
+
+            /* =================================================
+               COUNT PLOT
+            ================================================= */
+
+            function createCount(
+                column
+            ) {
+
+                const card =
+                    makeCard(
+                        "Count Plot — " +
+                        column,
+                        "Top 10 most common categories"
+                    );
+
+
+                const container =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                container.className =
+                    "chart-container";
+
+
+                const canvas =
+                    document.createElement(
+                        "canvas"
+                    );
+
+
+                container.appendChild(
+                    canvas
+                );
+
+
+                card.appendChild(
+                    container
+                );
+
+
+                const sorted =
+                    Object.entries(
+                        getValueCounts(
+                            column
+                        )
+                    )
+                        .sort(
+                            function (a, b) {
+
+                                return (
+                                    b[1] -
+                                    a[1]
+                                );
+
+                            }
+                        )
+                        .slice(
+                            0,
+                            10
+                        );
+
+
+                const chart =
+                    new Chart(
+                        canvas,
+                        {
+
+                            type:
+                                "bar",
+
+                            data: {
+
+                                labels:
+                                    sorted.map(
+                                        function (item) {
+                                            return item[0];
+                                        }
+                                    ),
+
+                                datasets: [
+
+                                    {
+
+                                        label:
+                                            "Count",
+
+                                        data:
+                                            sorted.map(
+                                                function (item) {
+                                                    return item[1];
+                                                }
+                                            )
+
+                                    }
+
+                                ]
+
+                            },
+
+                            options: {
+
+                                responsive:
+                                    true,
+
+                                maintainAspectRatio:
+                                    false,
+
+                                indexAxis:
+                                    "y"
+
+                            }
+
+                        }
+                    );
+
+
+                chartObjects.push(
+                    chart
+                );
+
+            }
+
+
+            /* =================================================
+               TREEMAP
+            ================================================= */
+
+            function createTreemap(
+                firstColumn,
+                secondColumn
+            ) {
+
+                if (
+                    typeof Plotly ===
+                    "undefined"
+                ) {
+
+                    return;
+
+                }
+
+
+                const card =
+                    makeCard(
+                        "Treemap — " +
+                        firstColumn +
+                        " / " +
+                        secondColumn,
+                        "Relationship between two categorical columns"
+                    );
+
+
+                const plot =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                plot.className =
+                    "plotly-container";
+
+
+                card.appendChild(
+                    plot
+                );
+
+
+                const counts = {};
+
+
+                data.forEach(
+                    function (row) {
+
+                        const first =
+                            String(
+                                row[firstColumn] ??
+                                "Unknown"
+                            );
+
+
+                        const second =
+                            String(
+                                row[secondColumn] ??
+                                "Unknown"
+                            );
+
+
+                        const key =
+                            first +
+                            " | " +
+                            second;
+
+
+                        counts[key] =
+                            (
+                                counts[key] ||
+                                0
+                            ) + 1;
+
+                    }
+                );
+
+
+                const labels = [];
+
+                const parents = [];
+
+                const values = [];
+
+
+                Object.entries(
+                    counts
+                ).forEach(
+                    function (
+                        [key, value]
+                    ) {
+
+                        const parts =
+                            key.split(
+                                " | "
+                            );
+
+
+                        labels.push(
+                            parts[1]
+                        );
+
+
+                        parents.push(
+                            parts[0]
+                        );
+
+
+                        values.push(
+                            value
+                        );
+
+                    }
+                );
+
+
+                const parentTotals = {};
+
+
+                Object.entries(
+                    counts
+                ).forEach(
+                    function (
+                        [key, value]
+                    ) {
+
+                        const parent =
+                            key.split(
+                                " | "
+                            )[0];
+
+
+                        parentTotals[parent] =
+                            (
+                                parentTotals[parent] ||
+                                0
+                            ) + value;
+
+                    }
+                );
+
+
+                Object.entries(
+                    parentTotals
+                ).forEach(
+                    function (
+                        [parent, total]
+                    ) {
+
+                        labels.push(
+                            parent
+                        );
+
+                        parents.push(
+                            ""
+                        );
+
+                        values.push(
+                            total
+                        );
+
+                    }
+                );
+
+
+                Plotly.newPlot(
+                    plot,
+                    [
+                        {
+
+                            type:
+                                "treemap",
+
+                            labels:
+                                labels,
+
+                            parents:
+                                parents,
+
+                            values:
+                                values
+
+                        }
+                    ],
+                    {
+                        margin: {
+                            t: 10,
+                            l: 10,
+                            r: 10,
+                            b: 10
+                        }
+                    },
+                    {
+                        responsive: true,
+                        displayModeBar: false
+                    }
+                );
+
+
+                chartObjects.push({
+
+                    kind:
+                        "plotly",
+
+                    element:
+                        plot
+
+                });
+
+            }
+
+
+            /* =================================================
+               SUNBURST
+            ================================================= */
+
+            function createSunburst(
+                firstColumn,
+                secondColumn
+            ) {
+
+                if (
+                    typeof Plotly ===
+                    "undefined"
+                ) {
+
+                    return;
+
+                }
+
+
+                const card =
+                    makeCard(
+                        "Sunburst — " +
+                        firstColumn +
+                        " / " +
+                        secondColumn,
+                        "Nested categorical distribution"
+                    );
+
+
+                const plot =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                plot.className =
+                    "plotly-container";
+
+
+                card.appendChild(
+                    plot
+                );
+
+
+                const grouped = {};
+
+
+                data.forEach(
+                    function (row) {
+
+                        const first =
+                            String(
+                                row[firstColumn] ??
+                                "Unknown"
+                            );
+
+
+                        const second =
+                            String(
+                                row[secondColumn] ??
+                                "Unknown"
+                            );
+
+
+                        if (
+                            !grouped[first]
+                        ) {
+
+                            grouped[first] =
+                                {};
+
+                        }
+
+
+                        grouped[first][second] =
+                            (
+                                grouped[first][second] ||
+                                0
+                            ) + 1;
+
+                    }
+                );
+
+
+                const labels = [];
+
+                const parents = [];
+
+                const values = [];
+
+
+                Object.entries(
+                    grouped
+                ).forEach(
+                    function (
+                        [parent, children]
+                    ) {
+
+                        const total =
+                            Object.values(
+                                children
+                            ).reduce(
+                                function (
+                                    sum,
+                                    value
+                                ) {
+
+                                    return (
+                                        sum +
+                                        value
+                                    );
+
+                                },
+                                0
+                            );
+
+
+                        labels.push(
+                            parent
+                        );
+
+                        parents.push(
+                            ""
+                        );
+
+                        values.push(
+                            total
+                        );
+
+
+                        Object.entries(
+                            children
+                        ).forEach(
+                            function (
+                                [child, count]
+                            ) {
+
+                                labels.push(
+                                    child
+                                );
+
+                                parents.push(
+                                    parent
+                                );
+
+                                values.push(
+                                    count
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+
+                Plotly.newPlot(
+                    plot,
+                    [
+                        {
+
+                            type:
+                                "sunburst",
+
+                            labels:
+                                labels,
+
+                            parents:
+                                parents,
+
+                            values:
+                                values
+
+                        }
+                    ],
+                    {
+                        margin: {
+                            t: 10,
+                            l: 10,
+                            r: 10,
+                            b: 10
+                        }
+                    },
+                    {
+                        responsive: true,
+                        displayModeBar: false
+                    }
+                );
+
+
+                chartObjects.push({
+
+                    kind:
+                        "plotly",
+
+                    element:
+                        plot
+
+                });
+
+            }
+
+
+            /* =================================================
+               LINE CHART
+            ================================================= */
+
+            function createLine(
+                dateColumn,
+                numericColumn
+            ) {
+
+                const card =
+                    makeCard(
+                        "Line Chart — " +
+                        numericColumn +
+                        " over " +
+                        dateColumn,
+                        "Numeric values over time"
+                    );
+
+
+                const container =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                container.className =
+                    "chart-container";
+
+
+                const canvas =
+                    document.createElement(
+                        "canvas"
+                    );
+
+
+                container.appendChild(
+                    canvas
+                );
+
+
+                card.appendChild(
+                    container
+                );
+
+
+                const points =
+                    data
+                        .filter(
+                            function (row) {
+
+                                return (
+                                    isDateLike(
+                                        row[dateColumn]
+                                    ) &&
+                                    Number.isFinite(
+                                        Number(
+                                            row[numericColumn]
+                                        )
+                                    )
+                                );
+
+                            }
+                        )
+                        .map(
+                            function (row) {
+
+                                return {
+
+                                    date:
+                                        new Date(
+                                            row[dateColumn]
+                                        ),
+
+                                    value:
+                                        Number(
+                                            row[numericColumn]
+                                        )
+
+                                };
+
+                            }
+                        )
+                        .sort(
+                            function (a, b) {
+
+                                return (
+                                    a.date -
+                                    b.date
+                                );
+
+                            }
+                        );
+
+
+                const chart =
+                    new Chart(
+                        canvas,
+                        {
+
+                            type:
+                                "line",
+
+                            data: {
+
+                                labels:
+                                    points.map(
+                                        function (point) {
+
+                                            return point.date
+                                                .toLocaleDateString();
+
+                                        }
+                                    ),
+
+                                datasets: [
+
+                                    {
+
+                                        label:
+                                            numericColumn,
+
+                                        data:
+                                            points.map(
+                                                function (point) {
+                                                    return point.value;
+                                                }
+                                            ),
+
+                                        tension:
+                                            0.3
+
+                                    }
+
+                                ]
+
+                            },
+
+                            options: {
+
+                                responsive:
+                                    true,
+
+                                maintainAspectRatio:
+                                    false
+
+                            }
+
+                        }
+                    );
+
+
+                chartObjects.push(
+                    chart
+                );
+
+            }
+
+
+            /* =================================================
+               HELPERS
+            ================================================= */
+
+            function getUniqueValues(
+                column
+            ) {
+
+                return [
+                    ...new Set(
+                        data
+                            .map(
+                                function (row) {
+
+                                    return String(
+                                        row[column] ??
+                                        ""
+                                    );
+
+                                }
+                            )
+                            .filter(
+                                function (value) {
+
+                                    return (
+                                        value !== ""
+                                    );
+
+                                }
+                            )
+                    )
+                ];
+
+            }
+
+
+            function getValueCounts(
+                column
+            ) {
+
+                const counts = {};
+
+
+                data.forEach(
+                    function (row) {
+
+                        const value =
+                            String(
+                                row[column] ??
+                                ""
+                            );
+
+
+                        if (!value) {
+                            return;
+                        }
+
+
+                        counts[value] =
+                            (
+                                counts[value] ||
+                                0
+                            ) + 1;
+
+                    }
+                );
+
+
+                return counts;
+
+            }
+
+
+            function isDateLike(
+                value
+            ) {
+
+                if (
+                    value === null ||
+                    value === undefined ||
+                    value === ""
+                ) {
+
+                    return false;
+
+                }
+
+
+                if (
+                    typeof value ===
+                    "number"
+                ) {
+
+                    return false;
+
+                }
+
+
+                return !Number.isNaN(
+                    Date.parse(
+                        String(value)
+                    )
+                );
+
+            }
+
+
+            function escapeHtml(
+                value
+            ) {
+
+                return String(value)
+                    .replace(
+                        /&/g,
+                        "&amp;"
+                    )
+                    .replace(
+                        /</g,
+                        "&lt;"
+                    )
+                    .replace(
+                        />/g,
+                        "&gt;"
+                    )
+                    .replace(
+                        /"/g,
+                        "&quot;"
+                    )
+                    .replace(
+                        /'/g,
+                        "&#039;"
+                    );
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
