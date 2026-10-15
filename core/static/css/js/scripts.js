@@ -340,6 +340,26 @@ if (uploadForm) {
    SEND FILE TO DJANGO + PANDAS
 ===================================================== */
 
+function getCookie(name) {
+    let cookieValue = null;
+
+    if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+
+        for (let index = 0; index < cookies.length; index += 1) {
+            const cookie = cookies[index].trim();
+
+            if (cookie.substring(0, name.length + 1) === (name + "=")) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+
+    return cookieValue;
+}
+
+
 async function analyzeWithPandas() {
 
     const file =
@@ -387,6 +407,8 @@ async function analyzeWithPandas() {
         const formData =
             new FormData(uploadForm);
 
+        const csrfToken =
+            getCookie("csrftoken");
 
         const response =
             await fetch(
@@ -394,13 +416,27 @@ async function analyzeWithPandas() {
                 {
                     method: "POST",
                     body: formData,
+                    credentials: "same-origin",
                     headers: {
                         "X-Requested-With":
-                            "XMLHttpRequest"
+                            "XMLHttpRequest",
+                        ...(csrfToken ? { "X-CSRFToken": csrfToken } : {})
                     }
                 }
             );
 
+        const contentType =
+            response.headers.get("content-type") || "";
+
+        if (!contentType.includes("application/json")) {
+            const text = await response.text();
+
+            throw new Error(
+                text.includes("<html")
+                    ? "The server returned an HTML error page. Please refresh and try again."
+                    : "The server responded with an invalid format."
+            );
+        }
 
         const result =
             await response.json();
