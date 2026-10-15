@@ -1212,9 +1212,24 @@
                                 }
                             );
 
+                        const responseText =
+                            await response.text();
 
-                        const result =
-                            await response.json();
+                        let result;
+
+                        try {
+                            result = JSON.parse(responseText);
+                        } catch {
+                            if (/^\s*</.test(responseText)) {
+                                throw new Error(
+                                    `The server returned an HTML page instead of JSON (HTTP ${response.status}). Check the /analyze/ request and the Django or hosting logs.`
+                                );
+                            }
+
+                            throw new Error(
+                                `The server returned an invalid response (HTTP ${response.status}).`
+                            );
+                        }
 
 
                         if (!response.ok) {
