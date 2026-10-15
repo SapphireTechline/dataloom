@@ -134,6 +134,23 @@ def analyze_dataset(request):
             )
 
 
+    except ImportError as error:
+
+        message = str(error)
+
+        if "openpyxl" in message.lower() or "xlrd" in message.lower():
+            message = (
+                "Excel support is not installed on this server. "
+                "Please redeploy after updating the project dependencies."
+            )
+
+        return JsonResponse(
+            {
+                "error": f"Could not read this file: {message}"
+            },
+            status=400
+        )
+
     except Exception as error:
 
         return JsonResponse(

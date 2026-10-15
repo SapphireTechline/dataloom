@@ -1,4 +1,6 @@
 Django>=6.1,<6.2
 gunicorn>=23,<24
 pandas>=3,<4
+openpyxl>=3.1,<4
+xlrd>=2.0,<3
 whitenoise>=6.9,<7
